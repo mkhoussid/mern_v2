@@ -6,8 +6,10 @@ const { check, validationResult } = require("express-validator/check");
 
 const router = express.Router();
 
+// middleware
 const auth = require("../../middleware/auth");
 
+// model
 const User = require("../../models/User");
 
 // @route  GET api/auth
