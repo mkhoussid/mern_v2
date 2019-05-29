@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://admin:admin@newcluster0-t1mwh.mongodb.net/test?retryWrites=true",
-  "jwtSecret": "mkhoussid"
+  "jwtSecret": "mkhoussid",
+  "githubClientId": "74f73d275794881c9d18",
+  "githubSecret": "9a05b8dc8d11955b0eb4413bc7a9945b4fe659c3"
 }
