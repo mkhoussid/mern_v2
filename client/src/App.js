@@ -1,8 +1,12 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import PrivateRoute from "./components/routing/PrivateRoute";
+
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
+import Dashboard from "./components/dashboard/Dashboard";
+
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Alert from "./components/layout/Alert";
@@ -30,12 +34,13 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
-          <Route exact path="/" component={Landing} />
+          <PrivateRoute exact path="/" component={Landing} />
           <section className="container">
             <Alert />
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
           </section>
         </Fragment>
