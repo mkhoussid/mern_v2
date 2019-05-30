@@ -14,21 +14,21 @@ export default function(state = initialState, action) {
     case REGISTER_SUCCESS:
       localStorage.setItem("token", payload.token);
 
-      return [
+      return {
         ...state,
         ...payload,
-        (isAuthenticated = true),
-        (loading = false)
-      ];
+        isAuthenticated: true,
+        loading: false
+      };
 
     case REGISTER_FAIL:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
 
       return {
-          ...state,
-          token: null,
-          isAuthenticated = false,
-          loading = false
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false
       };
 
     default:
