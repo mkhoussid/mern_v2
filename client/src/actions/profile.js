@@ -2,11 +2,13 @@ import axios from "axios";
 import { setAlert } from "./alert";
 
 import {
+  GET_REPOS,
   GET_PROFILE,
+  GET_PROFILES,
+  CLEAR_PROFILE,
   PROFILE_ERROR,
   UPDATE_PROFILE,
-  DELETE_ACCOUNT,
-  CLEAR_PROFILE
+  DELETE_ACCOUNT
 } from "./types";
 
 // Get current user profile
@@ -16,6 +18,60 @@ export const getCurrentProfile = () => async dispatch => {
 
     dispatch({
       type: GET_PROFILE,
+      payload: response.data
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Get all profiles
+export const getProfiles = () => async dispatch => {
+  dispatch({
+    type: CLEAR_PROFILE
+  });
+  try {
+    const response = await axios.get("/api/profile");
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: response.data
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Get profile by ID
+export const getProfileById = userId => async dispatch => {
+  try {
+    const response = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: response.data
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Get user github repo
+export const getGithub = username => async dispatch => {
+  try {
+    const response = await axios.get(`/api/profile/github/${username}`);
+
+    dispatch({
+      type: GET_REPOS,
       payload: response.data
     });
   } catch (err) {
@@ -192,7 +248,6 @@ export const deleteEducation = id => async dispatch => {
 };
 
 // Delete account and profile
-//  Delete education
 export const deleteAccount = () => async dispatch => {
   if (window.confirm("Are you sure? This cannot be undone!")) {
     try {
