@@ -1,7 +1,13 @@
 import axios from "axios";
 import { setAlert } from "./alert";
 
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from "./types";
+import {
+  GET_PROFILE,
+  PROFILE_ERROR,
+  UPDATE_PROFILE,
+  DELETE_ACCOUNT,
+  CLEAR_PROFILE
+} from "./types";
 
 // Get current user profile
 export const getCurrentProfile = () => async dispatch => {
@@ -142,6 +148,70 @@ export const addEducation = (formData, history) => async dispatch => {
 
       errors.forEach(error => {
         dispatch(setAlert(error.msg, "danger"));
+      });
+    }
+  }
+};
+
+//  Delete experience
+export const deleteExperience = id => async dispatch => {
+  try {
+    const response = await axios.delete(`/api/profile/experience/${id}`);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: response.data
+    });
+
+    dispatch(setAlert("Experience deleted", "success"));
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+//  Delete education
+export const deleteEducation = id => async dispatch => {
+  try {
+    const response = await axios.delete(`/api/profile/education/${id}`);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: response.data
+    });
+
+    dispatch(setAlert("Education deleted", "success"));
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Delete account and profile
+//  Delete education
+export const deleteAccount = () => async dispatch => {
+  if (window.confirm("Are you sure? This cannot be undone!")) {
+    try {
+      const response = await axios.delete("/api/profile/");
+
+      dispatch({
+        type: CLEAR_PROFILE
+      });
+
+      dispatch({
+        type: DELETE_ACCOUNT,
+        payload: response.data
+      });
+
+      dispatch(setAlert("Account deleted"));
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
       });
     }
   }
