@@ -258,8 +258,7 @@ export const deleteAccount = () => async dispatch => {
       });
 
       dispatch({
-        type: DELETE_ACCOUNT,
-        payload: response.data
+        type: DELETE_ACCOUNT
       });
 
       dispatch(setAlert("Account deleted"));

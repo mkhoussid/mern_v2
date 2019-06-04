@@ -132,10 +132,6 @@ const AddExperience = ({ addExperience, history }) => {
   );
 };
 
-const styles = {
-  backgroundColor: "grey"
-};
-
 AddExperience.propTypes = {
   addExperience: PropTypes.func.isRequired
 };
@@ -143,4 +139,4 @@ AddExperience.propTypes = {
 export default connect(
   null,
   { addExperience }
-)(withRouter(AddExperience));
+)(withRouter(withRouter(AddExperience)));
